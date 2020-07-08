@@ -7,26 +7,23 @@ require 'make-texture/texture_mappings/main_terrain/mapping'
 math.randomseed(os.time())
 
 function love.load()
-  initialize()
-
-  tiles_x = 3
-  tiles_y = 9
-  canvasWidth = 1536
-  canvasHeight = 4608
+  initializeApp()
 
   local mapping_data = {}
 
-  mapping_data['tile_resolution'] = 512
+  mapping_data['tileResolution'] = tileResolution
   mapping_data['tex1'] = 'tex1.png'
   mapping_data['tex2'] = 'tex2.png'
   mapping_data['tex3'] = 'tex3.png'
-  mapping_data['alphamask_tex2'] = 'alphatex.png'
-  mapping_data['alphamask_tex3'] = 'alphatex.png'
+  mapping_data['alphamaskTex2'] = 'alphatex_new_layer2.png'
+  mapping_data['alphamaskTex3'] = 'alphatex_new_layer3.png'
 
-  mapping_data['tiles_x'] = 3
-  mapping_data['tiles_y'] = 9
+  mapping_data['tilesX'] = 3
+  mapping_data['tilesY'] = 9
 
-  local mergedTexture = mergeTextures(mapping_data)
+  mergedTexture = mergeTextures(mapping_data)
+
+  
 end
 
 function love.draw()
@@ -36,7 +33,7 @@ function love.draw()
   -- love.graphics.setBlendMode("alpha", "premultiplied")
   love.graphics.setBlendMode("alpha")
 
-  love.graphics.draw(canvas, 0,0, 0, canvasScaleFactorX,canvasScaleFactorY)
+  love.graphics.draw(mergedTexture, 0,0, 0, canvasScaleFactorX,canvasScaleFactorY)
 
   -- love.graphics.setShader()
   -- love.graphics.setBlendMode("alpha")
@@ -45,4 +42,6 @@ function love.draw()
 
   love.graphics.print('Canvas: ' .. canvasWidth .. 'px stretched to ' .. canvasWidth * canvasScaleFactorX .. 'px', 0, 0)
   love.graphics.print('Canvas: ' .. canvasHeight .. 'px stretched to ' .. canvasHeight * canvasScaleFactorY .. 'px', 0, 20)
+  love.graphics.print('View scale factor X: ' .. canvasScaleFactorX, 0, 40)
+  love.graphics.print('View scale factor Y: ' .. canvasScaleFactorX, 0, 60)
 end
